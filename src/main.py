@@ -27,8 +27,12 @@ def main():
         #remove all URLs, difficult to glean any meaning from them
         x_data.loc[i, 'text'] = re.sub('http[A-Za-z0-9_:/.]+', '', str(x_data.loc[i, 'text']))
         #print(x_data.loc[i, 'text'])
+
     # Just a test
     #print(x_data.loc[example, 'text'])
+
+    x_data.to_csv('Training_xData')
+    y_label.to_csv('Training_yData')
 
 if __name__ == '__main__':
     main()
