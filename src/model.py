@@ -1,10 +1,12 @@
 import tensorflow as tf
-import keras
-from tensorflow.keras import layers, models
+from keras.models import Sequential
+from keras.layers import Embedding, Dense, Bidirectional, LSTM, Dropout
+from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
 
 MODEL_FILE_PATH = './/models//RNNModel.h5'
+
 
 class Model():
 	# input_dim: Size of input into the embedding layer. Should be the size of the vocabulary
@@ -21,21 +23,20 @@ class Model():
 		self.validation_split = validation_split
 	
 	def build_model(self):
-		model = models.Sequential()
+		model = Sequential()
 		# Number of layers and layer sizes will likely need a lot of tweaking
-		model.add(layers.Embedding(self.input_dim, output_dim=64))
-		model.add(layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True)))
-		#model.add(layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True)))
-		model.add(layers.Bidirectional(tf.keras.layers.LSTM(32))),
-		model.add(layers.Dense(64, activation='relu'))
-		model.add(layers.Dropout(self.dropout))
-		model.add(layers.Dense(1))		
+		model.add(Embedding(self.input_dim, output_dim=64))
+		model.add(Bidirectional(LSTM(64, return_sequences=True)))
+		# model.add(Bidirectional(LSTM(64, return_sequences=True)))
+		model.add(Bidirectional(LSTM(32))),
+		model.add(Dense(64, activation='relu'))
+		model.add(Dropout(self.dropout))
+		model.add(Dense(1))
 		model.summary()
-		
+
+		optimizer = Adam(0.001, 0.9)
 		# Loss function and optimizer may need to be changed, I havn't looked into them in detail
-		model.compile(loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
-					   optimizer=tf.keras.optimizers.Adam(1e-4),
-					   metrics=['accuracy'])
+		model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 						
 		return model
 												
