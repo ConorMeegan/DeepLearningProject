@@ -8,7 +8,7 @@ import numpy as np
 MODEL_FILE_PATH = './/models//RNNModel.h5'
 
 
-class Model():
+class Model ():
 	# input_dim: Size of input into the embedding layer. Should be the size of the vocabulary
 	# dropout: Fraction of units to drop
 	# epochs: Number of times the dataset is passed through

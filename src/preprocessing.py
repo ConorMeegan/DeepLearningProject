@@ -4,17 +4,17 @@ import numpy as np
 import pandas as pd 
 import re
 import string
-
+import preprocessing as processText
 
 class ProcessText():	
-	def clean_ats_and_links(text):
+	def clean_ats_and_links(self,text):
 		#remove @s twitter only allows alphanumeric and underscores in their names
 		return re.sub('@[A-Za-z0-9_]+|http[A-Za-z0-9_:/\.]+', '', str(text))
 	
-	def clean_digits(text):
+	def clean_digits(self,text):
 		return re.sub('\d+', '', text)
 		
-	def remove_stopwords(text):
+	def remove_stopwords(self,text):
 		stopword_list = stopwords.words('english')
 		skip_words = ["no", "nor", "not"]
 		
@@ -36,16 +36,18 @@ if __name__ == '__main__':
 	x_data2= x_data.iloc[0:0]
 	x = x_data.head(10001).copy()
 	processText = ProcessText()
+	print(x)
 	for j in range(0, int(num_rows/1000)):
 		first = j*1000
 		last = (j+1)*1000-1
 		x = x_data.iloc[first: last].copy()
 		for i in range(first, last):
+			print(x.loc[i])
 			#remove @s twitter only allows alphanumeric and underscores in their names
-			x.loc[i, 'text'] = processText.clean_ats_and_links(x.loc[i, 'text'])
-			x.loc[i, 'text'] = processText.clean_digits(x.loc[i, 'text'])
-			x.loc[i, 'text'] = processText.remove_stopwords(x.loc[i, 'text'])
+			x.loc[i] = processText.clean_ats_and_links(x.loc[i])
+			x.loc[i] = processText.clean_digits(x.loc[i])
+			x.loc[i] = processText.remove_stopwords(x.loc[i])
+			print(x.loc[i])
 			if i%100 == 0:
 				print(i)
-			
-	x_data2.append()
+	x_data2.append(x)
