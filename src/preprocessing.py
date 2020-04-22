@@ -7,14 +7,14 @@ import string
 import preprocessing as processText
 
 class ProcessText():	
-	def clean_ats_and_links(self,text):
+	def clean_ats_and_links(self, text):
 		#remove @s twitter only allows alphanumeric and underscores in their names
 		return re.sub('@[A-Za-z0-9_]+|http[A-Za-z0-9_:/\.]+', '', str(text))
 	
-	def clean_digits(self,text):
+	def clean_digits(self, text):
 		return re.sub('\d+', '', text)
 		
-	def remove_stopwords(self,text):
+	def remove_stopwords(self, text):
 		stopword_list = stopwords.words('english')
 		skip_words = ["no", "nor", "not"]
 		
@@ -22,7 +22,9 @@ class ProcessText():
 		cleaned_words = [word for word in words if (word not in stopword_list or word in skip_words) and len(word) > 1]
 		
 		return " ".join(cleaned_words)
-		
+
+	def remove_non_ascii(self, text):
+		return re.sub('[^\x00-\x7F]+',  '', text)
 	
 if __name__ == '__main__':
 	cols = ['target', 'id', 'date', 'flag', 'user', 'text']
@@ -49,6 +51,7 @@ if __name__ == '__main__':
 			x.loc[i] = processText.clean_ats_and_links(x.loc[i])
 			x.loc[i] = processText.clean_digits(x.loc[i])
 			x.loc[i] = processText.remove_stopwords(x.loc[i])
+			x.loc[i] = processText.remove_non_ascii(x.loc[i])
 			output_file.write("%s\n" % x.loc[i])
 			# print(x.loc[i])
 			if i % 1000 == 0:
