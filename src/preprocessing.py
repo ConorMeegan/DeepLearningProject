@@ -31,23 +31,26 @@ if __name__ == '__main__':
 							
 	x_data = tweets['text']
 	
-	num_rows=x_data.count()
-	num_rows=int(num_rows)
-	x_data2= x_data.iloc[0:0]
+	num_rows = x_data.count()
+	num_rows = int(num_rows)
+	x_data2 = x_data.iloc[0:0]
 	x = x_data.head(10001).copy()
 	processText = ProcessText()
-	print(x)
+	# print(x)
+	output_file = open("output.txt", "w")
+
 	for j in range(0, int(num_rows/1000)):
 		first = j*1000
 		last = (j+1)*1000-1
 		x = x_data.iloc[first: last].copy()
 		for i in range(first, last):
-			print(x.loc[i])
-			#remove @s twitter only allows alphanumeric and underscores in their names
+			# print(x.loc[i])
+			# remove @s twitter only allows alphanumeric and underscores in their names
 			x.loc[i] = processText.clean_ats_and_links(x.loc[i])
 			x.loc[i] = processText.clean_digits(x.loc[i])
 			x.loc[i] = processText.remove_stopwords(x.loc[i])
-			print(x.loc[i])
-			if i%100 == 0:
+			output_file.write("%s\n" % x.loc[i])
+			# print(x.loc[i])
+			if i % 1000 == 0:
 				print(i)
 	x_data2.append(x)
