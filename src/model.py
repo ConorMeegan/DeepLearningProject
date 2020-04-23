@@ -5,7 +5,7 @@ from keras.optimizers import Adam
 import matplotlib.pyplot as plt
 import numpy as np
 
-MODEL_FILE_PATH = './/models//RNNModel.h5'
+MODEL_FILE_PATH = '..//models//RNNModel.h5'
 
 
 class Model ():
