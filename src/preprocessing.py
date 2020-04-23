@@ -25,6 +25,9 @@ class ProcessText():
 
 	def remove_non_ascii(self, text):
 		return re.sub('[^\x00-\x7F]+',  '', text)
+
+	def to_lower(self, text):
+		return text.lower()
 	
 if __name__ == '__main__':
 	cols = ['target', 'id', 'date', 'flag', 'user', 'text']
@@ -52,6 +55,7 @@ if __name__ == '__main__':
 			x.loc[i] = processText.clean_digits(x.loc[i])
 			x.loc[i] = processText.remove_stopwords(x.loc[i])
 			x.loc[i] = processText.remove_non_ascii(x.loc[i])
+			x.loc[i] = processText.to_lower(x.loc[i])
 			output_file.write("%s\n" % x.loc[i])
 			# print(x.loc[i])
 			if i % 1000 == 0:
