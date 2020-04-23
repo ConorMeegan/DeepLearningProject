@@ -32,7 +32,7 @@ def main():
     targets = tf.keras.preprocessing.sequence.pad_sequences(targets, padding='post')
 	
     # doing a train test split of 70% training and 30% test
-    x_train, x_test, y_train, y_test = train_test_split(tensor, targets, test_size=0.3, random_state=0)
+    x_train, x_test, y_train, y_test = train_test_split(tensor, targets, test_size=0.2, random_state=0)
 	
     '''num_rows=x_data.count()
     num_rows=int(num_rows[0])
