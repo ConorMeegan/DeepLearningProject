@@ -33,14 +33,16 @@ class ProcessText():
         text = re.sub('[\?]{2,}', ' ?? ', str(text))
         return text
 
-    def clean_digits(self, text):
+    def clean_char(self, text):
         text = re.sub('[^A-Za-z\?\.! ]', ' ', text)
-        text = re.sub('[A-Za-z]+[!]{1}', '', text)
-        text = re.sub('[A-Za-z]+[\.]{1}', '', text)
-        text = re.sub('[A-Za-z]+[!\?]{1}', '',  text)
+        text = re.sub('(?<!\!)\!(?!\!)', '', text)
+
+        text = re.sub('(?<!\.)\.(?!\.)', '', text)
+        text = re.sub('(?<!\?)\?(?!\?)', '',  text)
+        return text
+    def remove_ex_spaces(self,text):
         text = re.sub('[ ]{2,}', ' ', text)
         return text
-
 
 if __name__ == '__main__':
     cols = ['target', 'id', 'date', 'flag', 'user', 'text']
@@ -65,11 +67,12 @@ if __name__ == '__main__':
             print(x.loc[i])
             # remove @s twitter only allows alphanumeric and underscores in their names
             x.loc[i] = processText.clean_ats_and_links(x.loc[i])
-            x.loc[i] = processText.remove_stopwords(x.loc[i])
             x.loc[i] = processText.remove_non_ascii(x.loc[i])
             x.loc[i] = processText.to_lower(x.loc[i])
             x.loc[i] = processText.separate_punctuation(x.loc[i])
-            x.loc[i] = processText.clean_digits(x.loc[i])
+            x.loc[i] = processText.clean_char(x.loc[i])
+            x.loc[i] = processText.remove_stopwords(x.loc[i])
+            x.loc[i] = processText.remove_ex_spaces(x.loc[i])
             output_file.write("%s\n" % x.loc[i])
             print(x.loc[i])
             if i % 1000 == 0:
