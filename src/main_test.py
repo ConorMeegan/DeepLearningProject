@@ -33,19 +33,6 @@ def main():
 	
     # doing a train test split of 70% training and 30% test
     x_train, x_test, y_train, y_test = train_test_split(tensor, targets, test_size=0.2, random_state=0)
-	
-    '''num_rows=x_data.count()
-    num_rows=int(num_rows[0])
-    x_data2= x_data.iloc[0:0]
-    x_test = x_data.head(10001).copy()
-    for j in range(0, int(num_rows/1000)):
-        first = j*1000
-        last = (j+1)*1000-1
-        x_test = x_data.iloc[first: last].copy()
-        for i in range(first, last):
-            #remove @s twitter only allows alphanumeric and underscores in their names
-            x_test.loc[i, 'text'] = re.sub('@[A-Za-z0-9_]+|http[A-Za-z0-9_:/\.]+', '', str(x_test.loc[i, 'text']))
-    x_data2.append(x_test)'''
 
     vocab_size = len(text_tokenizer.word_index) + 1
 
