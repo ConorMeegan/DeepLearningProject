@@ -61,10 +61,10 @@ if __name__ == '__main__':
 
     for j in range(0, int(num_rows / 1000)):
         first = j * 1000
-        last = (j + 1) * 1000 - 1
+        last = (j + 1) * 1000
         x = x_data.iloc[first: last].copy()
         for i in range(first, last):
-            print(x.loc[i])
+            # print(x.loc[i])
             # remove @s twitter only allows alphanumeric and underscores in their names
             x.loc[i] = processText.clean_ats_and_links(x.loc[i])
             x.loc[i] = processText.remove_non_ascii(x.loc[i])
@@ -74,7 +74,7 @@ if __name__ == '__main__':
             x.loc[i] = processText.remove_stopwords(x.loc[i])
             x.loc[i] = processText.remove_ex_spaces(x.loc[i])
             output_file.write("%s\n" % x.loc[i])
-            print(x.loc[i])
+            # print(x.loc[i])
             if i % 1000 == 0:
                 print(i)
     x_data2.append(x)

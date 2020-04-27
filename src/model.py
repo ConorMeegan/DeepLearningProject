@@ -15,7 +15,7 @@ class Model ():
 	# batch_size: Size of each batch into which the data is divided
 	# validation_split: Fraction of the traning data used for the Validation Set
 	def __init__(self, input_dim, dropout, epochs, batch_size, validation_split):
-		tf.random.set_seed(0)
+		# tf.random.set_seed(0)
 		print("#### Creating Model...")
 		self.input_dim = input_dim
 		self.dropout = dropout
