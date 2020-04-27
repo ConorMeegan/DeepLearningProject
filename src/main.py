@@ -21,7 +21,7 @@ def main():
     y_label = tweets['target']
 
     # this is the preprocessed file being read in --> name it whatever you'd like e.g file.txt
-    x_data_load_processed = open("full_preprocessed.txt", "r")
+    x_data_load_processed = open("slightly_preprocessed.txt", "r")
     x_data_processed = x_data_load_processed.readlines()
 
     text_tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
@@ -37,6 +37,9 @@ def main():
     target_tokenizer.fit_on_texts(text_labels)
     targets = target_tokenizer.texts_to_sequences(text_labels)
     targets = tf.keras.preprocessing.sequence.pad_sequences(targets, padding='post')
+	
+    # Dont ask about this line
+    targets = [x - 1 for x in targets]
 
     # doing a train test split of 70% training and 30% test
     x_train, x_test, y_train, y_test = train_test_split(tensor, targets, test_size=0.2, random_state=0)
