@@ -45,9 +45,9 @@ def main():
     vocab_size = len(text_tokenizer.word_index) + 1
 
     # Create the model
-    # rnn = model.Model(input_dim=vocab_size, dropout=0.5, epochs=1, batch_size=128, validation_split=0.2)
+    rnn = model.Model(input_dim=vocab_size, dropout=0.5, epochs=1, batch_size=128, validation_split=0.2)
     # rnn.train_model(x_train, x_test, y_train, y_test)
-    # rnn.train_model(x_train2, x_test2, y_train2, y_test2)
+    rnn.train_model(x_train2, x_test2, y_train2, y_test2)
 
 
 if __name__ == '__main__':
