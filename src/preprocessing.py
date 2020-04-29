@@ -28,15 +28,18 @@ class ProcessText():
         return text.lower()
 
     def separate_punctuation(self, text):
+        #change all expressions of multiple punctiation marks to make it so that they are two. This way
+        #they will all tokenize the same way
         text = re.sub('[!]{2,}', ' !! ', str(text))
         text = re.sub('[\.]{2,}', ' .. ', str(text))
         text = re.sub('[\?]{2,}', ' ?? ', str(text))
         return text
 
     def clean_char(self, text):
+        #remove anything that isnt letters or punctuation
         text = re.sub('[^A-Za-z\?\.! ]', ' ', text)
+        #remove all instances of single punctuation as they are less consistantly expressive
         text = re.sub('(?<!\!)\!(?!\!)', '', text)
-
         text = re.sub('(?<!\.)\.(?!\.)', '', text)
         text = re.sub('(?<!\?)\?(?!\?)', '',  text)
         return text
@@ -53,12 +56,14 @@ if __name__ == '__main__':
 
     num_rows = x_data.count()
     num_rows = int(num_rows)
+    # establish new dataframe with no data but the same labels
     x_data2 = x_data.iloc[0:0]
     x = x_data.head(10001).copy()
     processText = ProcessText()
     # print(x)
     output_file = open("output.txt", "w")
-
+    #processing was done 1/1000th of the total dataset at a time in order to make it easier on the storage of the GPU
+    #and make the process run significantly faster
     for j in range(0, int(num_rows / 1000)):
         first = j * 1000
         last = (j + 1) * 1000 - 1
