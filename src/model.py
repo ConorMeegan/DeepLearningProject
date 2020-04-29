@@ -15,7 +15,7 @@ class Model ():
 	# batch_size: Size of each batch into which the data is divided
 	# validation_split: Fraction of the traning data used for the Validation Set
 	def __init__(self, input_dim, dropout, epochs, batch_size, validation_split):
-		tf.random.set_seed(0)
+		# tf.random.set_seed(0)
 		print("#### Creating Model...")
 		self.input_dim = input_dim
 		self.dropout = dropout
@@ -29,13 +29,13 @@ class Model ():
 		model.add(Embedding(self.input_dim, output_dim=64))
 		model.add(Bidirectional(LSTM(64, return_sequences=True)))
 		# model.add(Bidirectional(LSTM(64, return_sequences=True)))
-		model.add(Bidirectional(LSTM(32))),
+		model.add(Bidirectional(LSTM(32)))
 		model.add(Dense(64, activation='relu'))
 		model.add(Dropout(self.dropout))
-		model.add(Dense(1))
+		model.add(Dense(1, activation='sigmoid'))
 		model.summary()
 
-		optimizer = Adam(0.001, 0.9)
+		optimizer = Adam()
 		# Loss function and optimizer may need to be changed, I havn't looked into them in detail
 		model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 						
