@@ -82,4 +82,3 @@ if __name__ == '__main__':
             # print(x.loc[i])
             if i % 1000 == 0:
                 print(i)
-    x_data2.append(x)
