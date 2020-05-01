@@ -61,7 +61,7 @@ if __name__ == '__main__':
     x = x_data.head(10001).copy()
     processText = ProcessText()
     # print(x)
-    output_file = open("output.txt", "w")
+    output_file = open("full_preprocessed.txt", "w")
     #processing was done 1/1000th of the total dataset at a time in order to make it easier on the storage of the GPU
     #and make the process run significantly faster
     for j in range(0, int(num_rows / 1000)):
